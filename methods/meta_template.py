@@ -30,7 +30,7 @@ class MetaTemplate(nn.Module):
         return out
 
     def parse_feature(self,x,is_feature):
-        x    = Variable(x.cuda())
+        x    = Variable(x)
         if is_feature:
             z_all = x
         else:
@@ -55,15 +55,21 @@ class MetaTemplate(nn.Module):
         print_freq = 10
 
         avg_loss=0
-        for i, (x,_ ) in enumerate(train_loader):
-            self.n_query = x.size(1) - self.n_support           
+
+        #x.size(): 5,20,3,28,28
+        for i, (x,target ) in enumerate(train_loader):
+            #print(target)
+            print("id: %s"%i)
+            import pdb
+            #pdb.set_trace()
+            self.n_query = x.size(1) - self.n_support # 15
             if self.change_way:
                 self.n_way  = x.size(0)
             optimizer.zero_grad()
             loss = self.set_forward_loss( x )
             loss.backward()
             optimizer.step()
-            avg_loss = avg_loss+loss.data[0]
+            avg_loss = avg_loss+loss.item()
 
             if i % print_freq==0:
                 #print(optimizer.state_dict()['param_groups'][0]['lr'])

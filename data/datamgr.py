@@ -64,10 +64,15 @@ class SimpleDataManager(DataManager):
 
 class SetDataManager(DataManager):
     def __init__(self, image_size, n_way, n_support, n_query, n_eposide =100):        
+        #n_way:5
+        #n_support:5 (shot)
+        #n_query: 16
+        #n_eposide: 100        
+
         super(SetDataManager, self).__init__()
         self.image_size = image_size
         self.n_way = n_way
-        self.batch_size = n_support + n_query
+        self.batch_size = n_support + n_query  #21
         self.n_eposide = n_eposide
 
         self.trans_loader = TransformLoader(image_size)

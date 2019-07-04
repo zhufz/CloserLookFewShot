@@ -5,7 +5,7 @@ from torch.autograd import Variable
 import torch.optim
 import torch.optim.lr_scheduler as lr_scheduler
 import time
-import os
+import os,pdb
 import glob
 
 import configs
@@ -153,7 +153,7 @@ if __name__=='__main__':
     else:
        raise ValueError('Unknown method')
 
-    model = model.cuda()
+    #model = model.cuda()
 
     params.checkpoint_dir = '%s/checkpoints/%s/%s_%s' %(configs.save_dir, params.dataset, params.model, params.method)
     if params.train_aug:
